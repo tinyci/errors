@@ -69,6 +69,12 @@ func Errorf(f string, args ...interface{}) error {
 	return mkError(fmt.Errorf(f, args...))
 }
 
+// WithError combines two errors to be compatible with errors.As() and
+// similar functions in the stdlib errors package.
+func WithError(err error, f string, args ...interface{}) error {
+	return mkError(fmt.Errorf("%v: %w", fmt.Sprintf(f, args...), err))
+}
+
 // GRPC formats a GRPC error in our caller ID pattern.
 func GRPC(code codes.Code, f string, args ...interface{}) error {
 	return transformWithCaller(2, status.Errorf(code, f, args...))

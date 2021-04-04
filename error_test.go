@@ -12,7 +12,10 @@ func TestErrors(t *testing.T) {
 	errorFuncs := map[string]func() error{
 		"plain": func() error { return New("error") },
 		"errorf": func() error {
-			return Errorf("error: %w", errors.New("some other error"))
+			return Errorf("error: %v", true)
+		},
+		"witherror": func() error {
+			return WithError(errors.New("some error"), "error: %v", true)
 		},
 		"grpc": func() error {
 			return GRPC(codes.Aborted, "whoops: %v", 420)
