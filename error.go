@@ -77,7 +77,7 @@ func WithError(err error, f string, args ...interface{}) error {
 
 // GRPC formats a GRPC error in our caller ID pattern.
 func GRPC(code codes.Code, f string, args ...interface{}) error {
-	return transformWithCaller(2, status.Errorf(code, f, args...))
+	return status.Errorf(code, f, args...)
 }
 
 func transformWithCaller(depth int, e error) error {
